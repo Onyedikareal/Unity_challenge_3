@@ -11,12 +11,14 @@ public class PlayerControllerX : MonoBehaviour
     private Rigidbody playerRb;
     private float topPos = 17;
 
+
     public ParticleSystem explosionParticle;
     public ParticleSystem fireworksParticle;
 
     private AudioSource playerAudio;
     public AudioClip moneySound;
     public AudioClip explodeSound;
+    public AudioClip bottomSound;
 
 
     // Start is called before the first frame update
@@ -70,9 +72,10 @@ public class PlayerControllerX : MonoBehaviour
             playerAudio.PlayOneShot(moneySound, 1.0f);
             Destroy(other.gameObject);
 
-        }else if (other.gameObject.CompareTag("Floor"))
+        }else if (other.gameObject.CompareTag("Floor") && !gameOver)
         {
-            playerRb.AddForce(Vector3.up * 1, ForceMode.Impulse);
+            playerAudio.PlayOneShot(bottomSound, 1.0f);
+            playerRb.AddForce(Vector3.up * 5, ForceMode.Impulse);
         }
 
     }
